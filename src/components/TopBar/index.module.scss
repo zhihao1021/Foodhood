@@ -1,0 +1,46 @@
+.topBar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 4rem;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0.75rem calc((100vw - $max-content) / 2);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #000;
+    background-color: $background;
+    z-index: 100;
+
+    a:has(img) {
+        height: 100%;
+
+        img {
+            height: 100%;
+        }
+    }
+
+    .menu {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+
+        .dropdownMenu {
+            font-size: 1.25rem;
+        }
+
+        .login {
+            background-color: rgba($primary, 0.8);
+            padding: 0.5rem 1rem;
+            border-radius: 0.25rem;
+            font-size: 1.15rem;
+            transition: background-color 0.3s, transform 0.3s;
+
+            &:hover {
+                background-color: $primary;
+                transform: translateY(-0.1rem);
+            }
+        }
+    }
+}
