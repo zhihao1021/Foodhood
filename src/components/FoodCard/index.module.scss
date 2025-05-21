@@ -1,0 +1,98 @@
+.foodCard {
+    position: relative;
+    width: 100%;
+    height: 12rem;
+    border-radius: 0.75rem;
+    overflow: hidden;
+    box-shadow: 0.1rem 0.1rem 0.3rem -0.1rem #000;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+
+    .imageBox {
+        flex: 1;
+        background-color: #AAA;
+    }
+
+    .infoBox {
+        display: flex;
+        padding: 0.3rem 0.8rem;
+        align-items: center;
+        justify-content: space-between;
+
+        .title {
+            max-width: 60%;
+            text-wrap: nowrap;
+
+            * {
+                text-overflow: ellipsis;
+            }
+
+            >* {
+                overflow-x: hidden;
+            }
+
+            h5 {
+                margin: 0;
+                font-size: 1.1rem;
+                color: $primary;
+            }
+
+            .description {
+                font-size: 0.95rem;
+            }
+
+            .location {
+                display: flex;
+                max-width: 100%;
+                align-items: center;
+                font-size: 0.8rem;
+                gap: 0.25rem;
+                color: $secondary;
+
+                .locationDescription {
+                    overflow-x: hidden;
+                }
+            }
+        }
+
+        .otherInfo {
+            display: flex;
+            height: 100%;
+            flex-direction: column;
+            align-items: flex-end;
+            justify-content: space-between;
+
+            .properties {
+                display: flex;
+                align-items: center;
+                gap: 0.25rem;
+                font-size: 1.25rem;
+
+                .eco {
+                    color: #1FB11F;
+                }
+
+                .tableware {
+                    color: #777777;
+                }
+            }
+
+            .distance {
+                display: flex;
+                align-items: flex-end;
+                gap: 0.25rem;
+                font-size: 0.9rem;
+                color: #B833CF;
+            }
+
+            .time {
+                color: $accent;
+                font-size: 0.9rem;
+                display: flex;
+                align-items: center;
+                gap: 0.25rem;
+            }
+        }
+    }
+}

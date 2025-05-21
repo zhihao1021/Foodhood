@@ -1,0 +1,28 @@
+.bottomBar {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 4rem;
+    border-top: 1px solid #CCC;
+    transition: bottom 0.3s;
+    justify-content: space-around;
+    align-items: center;
+    backdrop-filter: blur(4px);
+
+    &[data-show=false] {
+        bottom: -4rem;
+    }
+
+    a {
+        display: block;
+        font-size: 1.75rem;
+        color: rgba($context, 0.5);
+        transition: color 0.3s;
+
+        &[data-selected=true] {
+            color: $context;
+        }
+    }
+}

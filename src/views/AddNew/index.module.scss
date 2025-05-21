@@ -1,0 +1,300 @@
+.addNew {
+    padding: 0 calc((100vw - $max-content) / 2);
+
+    .field {
+        display: flex;
+        align-items: center;
+        font-size: 1.25rem;
+        margin: 0.8em 0;
+        gap: 1rem;
+
+        &:has(.tagBox) {
+            align-items: flex-start;
+        }
+
+        .key {
+            min-width: 4em;
+        }
+
+        .inputBox {
+            position: relative;
+            flex: 1;
+            height: 1.275em;
+            line-height: 1.275em;
+            padding: 0.1em 0.1rem;
+
+            input {
+                display: block;
+                width: 100%;
+                height: 100%;
+                box-sizing: border-box;
+                color: rgba($context, 0.6);
+                transition: color 0.3s;
+            }
+
+            &::before,
+            &::after {
+                content: "";
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                height: 1px;
+                background-color: rgba($context, 0.3);
+            }
+
+            &::after {
+                left: 25%;
+                width: 0;
+                background-color: $context;
+                transition: left 0.4s, width 0.4s;
+            }
+
+            &:has(input:focus) {
+                input {
+                    color: $context;
+                }
+
+                &::after {
+                    left: 0;
+                    width: 100%;
+                }
+            }
+
+            &:has(input[type=number]) {
+                flex: initial;
+                width: 3em;
+            }
+        }
+
+        .switch {
+            display: flex;
+            height: 1.275em;
+            align-items: center;
+            gap: 0.5em;
+            cursor: pointer;
+
+            img {
+                height: 100%;
+            }
+
+            .dot {
+                position: relative;
+                width: 2.45em;
+                height: 100%;
+                box-shadow: inset 0 0 0.25em #0008;
+                border-radius: 0.6375em;
+                transition: background-color 0.3s;
+                background-color: #CCC;
+
+                &::before {
+                    content: "";
+                    position: absolute;
+                    top: 0.125em;
+                    left: 0.125em;
+                    height: 1.0125em;
+                    width: 1.0125em;
+                    background-color: $background;
+                    border-radius: 50%;
+                    box-shadow: 0 0 0.1em #000;
+                    transition: left 0.3s;
+                }
+            }
+
+            &:has(input:checked) {
+                .dot {
+                    // background-color: #22AA33;
+                    background-color: $primary;
+
+                    &::before {
+                        left: calc(100% - 1.1375em);
+                    }
+                }
+            }
+        }
+
+        .tagBox {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+
+            .tag {
+                position: relative;
+                border: 0.1rem solid rgba($context, 0.5);
+                padding: 0.05em 0.5em;
+                padding-left: 1.75em;
+                border-radius: 0.25em;
+                color: rgba($context, 0.5);
+                transition: color 0.3s, border-color 0.3s;
+                cursor: pointer;
+
+                &::before,
+                &::after {
+                    content: "";
+                    position: absolute;
+                    top: 0.05em;
+                    left: 0.4em;
+                    width: 1em;
+                    height: calc(100% - 0.1em);
+                    line-height: 1.5em;
+                    text-align: center;
+                    transition: transform 0.3s;
+                }
+
+                &::before {
+                    content: "check_box_outline_blank";
+                    transform: scale(1);
+                }
+
+                &::after {
+                    content: "select_check_box";
+                    transform: scale(0);
+                }
+
+                &:has(input:checked) {
+                    color: $context;
+                    border-color: $context;
+
+                    &::before {
+                        transform: scale(0);
+                    }
+
+                    &::after {
+                        transform: scale(1);
+                    }
+                }
+            }
+        }
+
+        .location {
+            flex: 1;
+            display: flex;
+            gap: 0.5em;
+            align-items: center;
+            justify-content: space-between;
+            overflow-x: hidden;
+
+            .error {
+                font-size: min(1em, calc(($max-content - 12.5rem - 0.55em) / var(--text-count)));
+            }
+
+            .loc {
+                max-width: calc(50% - 0.5em - 3.25rem);
+                overflow-x: hidden;
+                text-overflow: ellipsis;
+                font-size: 0.8em;
+            }
+
+            button {
+                color: $context;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 0.75em;
+                gap: 0.3em;
+                width: 6.5rem;
+                padding: 0.25em 0;
+                border: 0.1rem solid $primary;
+                background-color: $primary;
+                border-radius: 0.25em;
+                cursor: pointer;
+            }
+        }
+
+        &:has(.imageList) {
+            align-items: flex-start;
+        }
+
+        .imageList {
+            flex: 1;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.8rem;
+
+            .imageBox,
+            label {
+                max-width: calc((100% - 1rem) / 3);
+                width: 8rem;
+                height: min(8rem, calc(($max-content - 7rem) / 3));
+                aspect-ratio: 1/1;
+                border-radius: 1rem;
+            }
+
+            .imageBox {
+                position: relative;
+                isolation: isolate;
+
+                img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                    object-position: center;
+                    border-radius: 1rem;
+                    overflow: hidden;
+                }
+
+                button {
+                    position: absolute;
+                    top: -0.5rem;
+                    left: -0.5rem;
+                    z-index: 10;
+                    padding: 0;
+                    width: 1rem;
+                    height: 1rem;
+                    border-radius: 50%;
+                    color: $background;
+                    background-color: #D33;
+                    font-size: 0.75rem;
+                }
+            }
+
+            label {
+                display: flex;
+                border: 0.1rem solid rgba($context, 0.5);
+                width: 7.8rem;
+                max-width: calc((100% - 1rem) / 3 - 0.2rem);
+                height: calc(min(8rem, ($max-content - 7rem) / 3) - 0.2rem);
+                align-items: center;
+                justify-content: center;
+
+                input {
+                    display: none;
+                }
+
+                span {
+                    color: rgba($context, 0.5);
+                    font-size: 2rem;
+                    user-select: none;
+                }
+            }
+        }
+
+        .numberBox {
+            display: flex;
+            gap: 0.15em;
+            align-items: center;
+
+            button {
+                font-size: inherit;
+                padding: 0;
+            }
+        }
+    }
+
+    .buttonBar {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+
+        button {
+            display: flex;
+            align-items: center;
+            gap: 0.5em;
+            font-size: 1.25rem;
+            padding: 0.3em 1.25em;
+            background-color: $secondary;
+            border-radius: 0.25em;
+        }
+    }
+}
