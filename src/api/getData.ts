@@ -2,11 +2,11 @@ import Food from "@/schemas/food";
 // import axios from "axios";
 
 export default async function getData(options: {
-    offset?: number,
+    skip?: number,
     limit?: number,
 }): Promise<Array<Food>> {
     const {
-        // offset,
+        skip,
         limit
     } = options;
 
@@ -29,7 +29,7 @@ export default async function getData(options: {
     }));
 
     // let requestUrl = "/food?"
-    // if (offset) requestUrl += `offset=${offset}&`;
+    // if (skip) requestUrl += `skip=${skip}&`;
 
     // if (limit) requestUrl += `limit=${limit}`;
 

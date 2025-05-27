@@ -18,7 +18,7 @@ export function App(): ReactNode {
         if (allLoaded) return;
 
         getData({
-            offset: data.length,
+            skip: data.length,
             limit: 10
         }).then(result => {
             if (result.length < 10) setAllLoaded(true);
