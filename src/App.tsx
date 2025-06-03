@@ -10,6 +10,7 @@ import AddNew from "./views/AddNew";
 import Home from "./views/Home";
 import Search from "./views/Search";
 import Detail from "./views/Detail";
+import Order from "./views/Order";
 
 import getData from "./api/getData";
 
@@ -43,6 +44,8 @@ export function App(): ReactNode {
             <Route path="/add" element={<AddNew />} />
             <Route path="/search" element={<Search />} /> 
             <Route path="/detail/:id" element={<Detail />} />
+            <Route path="/order" element={<Order />} />
+
             <Route path="*" element={<Navigate to="/home" replace />} />
         </Routes>
         <FunctionBar />
