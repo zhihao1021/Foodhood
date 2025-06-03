@@ -8,6 +8,8 @@ import FunctionBar from "./components/FunctionBar";
 
 import AddNew from "./views/AddNew";
 import Home from "./views/Home";
+import Search from "./views/Search";
+
 import getData from "./api/getData";
 
 export function App(): ReactNode {
@@ -38,6 +40,7 @@ export function App(): ReactNode {
         <Routes>
             <Route path="/home" element={<Home data={data} loadNext={loadNext} />} />
             <Route path="/add" element={<AddNew />} />
+            <Route path="/search" element={<Search />} /> 
             <Route path="*" element={<Navigate to="/home" replace />} />
         </Routes>
         <FunctionBar />
