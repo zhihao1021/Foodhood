@@ -1,50 +1,65 @@
-import { ReactNode, useEffect, useState } from "react";
+import { ReactNode } from "react";
+
 import { Food } from "@/schemas/food";
+import { Order } from "@/schemas/order";
+
+import FoodCard from "@/components/FoodCard";
+import Loading from "@/components/Loading";
+
 import styles from "./index.module.scss";
 
-export default function Order(): ReactNode {
-  const [orders, setOrders] = useState<Food[]>([]);
+type propsType = Readonly<{
+    foodList?: Array<Food>
+    orderList?: Array<Order>,
+    latitude: number,
+    longitude: number,
+}>;
 
-  useEffect(() => {
-    const mock: Food[] = [
-      {
-        uid: "1",
-        title: "雞排便當",
-        description: "免費",
-        includesVegetarian: false,
-        needTableware: true,
-        tags: [1],
-        latitude: 22.999,
-        longitude: 120.221,
-        locationDescription: "資訊系館 3 樓",
-        validityPeriod: 2,
-        imageCount: 0,
-        createdAt: Date.now(),
-        authorId: "author1",
-      },
-    ];
-    setOrders(mock);
-  }, []);
+export default function OrderPage(props: propsType): ReactNode {
+    const {
+        foodList,
+        orderList,
+        latitude,
+        longitude,
+    } = props;
 
-  return (
-    <div className={styles.container}>
-      <h2>我的訂單</h2>
-      {orders.length === 0 ? (
-        <div className={styles.emptyBox}>尚未預訂任何便當</div>
-      ) : (
-        orders.map((item) => (
-          <div key={item.uid} className={styles.orderCard}>
-            <div className={styles.infoBox}>
-              <h5>{item.title}</h5>
-              <div className={styles.note}>{item.description}</div>
-              <div className={styles.location}>
-                <span className="ms">pin_drop</span>
-                {item.locationDescription}
-              </div>
-            </div>
-          </div>
-        ))
-      )}
-    </div>
-  );
+    return <div className={styles.orderPage}>
+        <h1>我的預定</h1>
+        <Loading show={foodList === undefined || orderList === undefined} />
+        {
+            foodList && orderList && <>
+                {
+                    orderList.filter(order => !order.received).map(order => {
+                        const food = foodList.find(food => food.uid === order.foodId);
+                        if (!food) return undefined;
+
+                        return <FoodCard
+                            key={order.uid}
+                            data={food}
+                            lat={latitude}
+                            lng={longitude}
+                        />
+                    })
+                }
+            </>
+        }
+        <h1>歷史紀錄</h1>
+        {
+            foodList && orderList && <>
+                {
+                    orderList.filter(order => order.received).map(order => {
+                        const food = foodList.find(food => food.uid === order.foodId);
+                        if (!food) return undefined;
+
+                        return <FoodCard
+                            key={order.uid}
+                            data={food}
+                            lat={latitude}
+                            lng={longitude}
+                        />
+                    })
+                }
+            </>
+        }
+    </div >
 }

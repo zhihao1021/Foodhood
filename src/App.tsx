@@ -16,24 +16,53 @@ import TopBar from "./components/TopBar";
 
 import AddNew from "./views/AddNew";
 import Home from "./views/Home";
-import Search from "./views/Search";
 import Detail from "./views/Detail";
-import Order from "./views/Order";
+import OrderPage from "./views/Order";
+import getOrderList from "./api/order/getOrderList";
+import { Order } from "./schemas/order";
+import Profile from "./views/Profile";
 
 export function App(): ReactNode {
-    const [data, setData] = useState<Array<Food>>([]);
+    const [foodList, setFoodList] = useState<Array<Food>>();
+    const [orderList, setOrderList] = useState<Array<Order>>();
+
+    const [latitude, setLatitude] = useState<number>(0);
+    const [longitude, setLongitude] = useState<number>(0);
+
+    const reloadOrderList = useCallback(() => getOrderList().then(setOrderList), []);
 
     useEffect(() => {
-        getFoodList().then(setData);
-    }, []);
+        getFoodList().then(setFoodList);
+        reloadOrderList();
+
+        navigator.geolocation.getCurrentPosition(position => {
+            setLatitude(position.coords.latitude);
+            setLongitude(position.coords.longitude);
+        }, () => { }, {
+            enableHighAccuracy: true,
+            maximumAge: 0,
+            timeout: 30000
+        });
+    }, [reloadOrderList]);
 
     return <Routes>
-        <Route path="/home" element={<Home data={data} />} />
+        <Route path="/home" element={<Home
+            foodList={foodList}
+            latitude={latitude}
+            longitude={longitude}
+        />} />
         <Route path="/add" element={<AddNew />} />
-        <Route path="/search" element={<Search />} />
-        <Route path="/detail/:id" element={<Detail />} />
-        <Route path="/order" element={<Order />} />
-
+        <Route path="/detail/:id" element={<Detail
+            foodList={foodList}
+            reloadOrderList={reloadOrderList}
+        />} />
+        <Route path="/order" element={<OrderPage
+            foodList={foodList}
+            orderList={orderList}
+            latitude={latitude}
+            longitude={longitude}
+        />} />
+        <Route path="/profile" element={<Profile />} />
         <Route path="*" element={<Navigate to="/home" replace />} />
     </Routes>
 }

@@ -3,7 +3,7 @@ import axios from "axios";
 import { User } from "@/schemas/user";
 
 export default async function getUserData(uid?: string): Promise<User> {
-    if (import.meta.env.DEV) {
+    if (import.meta.env.VITE_DEBUG) {
         await new Promise(resolve => setTimeout(resolve, 1000));
 
         return {

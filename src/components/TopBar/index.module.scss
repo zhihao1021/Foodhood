@@ -10,7 +10,7 @@
     align-items: center;
     justify-content: space-between;
     background-color: $background;
-    z-index: 100;
+    z-index: 2000;
     transition: top 0.3s;
 
     &[data-show=false] {

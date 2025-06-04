@@ -3,7 +3,7 @@ import axios from "axios";
 import { Food, FoodCreate } from "@/schemas/food";
 
 export default async function createFood(data: FoodCreate): Promise<Food> {
-    if (import.meta.env.DEV) {
+    if (import.meta.env.VITE_DEBUG) {
         await new Promise(resolve => setTimeout(resolve, 1000));
 
         return {

@@ -1,21 +1,26 @@
-import { ReactNode, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { ReactNode, useCallback, useMemo, useRef, useState } from "react";
 
 import styles from "./index.module.scss";
 import FoodCard from "@/components/FoodCard";
 import { Food } from "@/schemas/food";
 import tagsArray from "@/const/tags";
 import getDistance from "@/utils/getDistance";
+import Loading from "@/components/Loading";
 
 type propsType = Readonly<{
-    data: Array<Food>
+    foodList?: Array<Food>,
+    latitude: number,
+    longitude: number
 }>;
 
 export default function Home(props: propsType): ReactNode {
-    const { data } = props;
+    const {
+        foodList,
+        latitude,
+        longitude
+    } = props;
 
     const ref = useRef<HTMLDivElement>(null);
-    const [latitude, setLatitude] = useState<number>(0);
-    const [longitude, setLongitude] = useState<number>(0);
 
     const [search, setSearch] = useState<string>("");
     const [showToolBox, setShowToolBox] = useState<boolean>(false);
@@ -26,9 +31,11 @@ export default function Home(props: propsType): ReactNode {
     const [tags, setTags] = useState<Array<number>>([]);
 
     const displayData = useMemo(() => {
+        if (foodList === undefined) return [];
+        
         const searchLower = search.trim().toLowerCase();
 
-        let result = !searchLower ? data : data.filter(food => {
+        let result = !searchLower ? foodList : foodList.filter(food => {
             const title = food.title.toLowerCase();
             const description = food.description.toLowerCase();
             const locationDescription = food.locationDescription.toLowerCase();
@@ -58,7 +65,7 @@ export default function Home(props: propsType): ReactNode {
         }
 
         return result;
-    }, [data, search, distance, distanceMode, vegetarian, tableware, tags, latitude, longitude]);
+    }, [foodList, search, distance, distanceMode, vegetarian, tableware, tags, latitude, longitude]);
 
     const advance = useMemo(() => {
         return distance > 0 || vegetarian || tableware || tags.length > 0;
@@ -71,17 +78,6 @@ export default function Home(props: propsType): ReactNode {
         setVegetarian(false);
         setTableware(false);
         setTags([]);
-    }, []);
-
-    useEffect(() => {
-        navigator.geolocation.getCurrentPosition(position => {
-            setLatitude(position.coords.latitude);
-            setLongitude(position.coords.longitude);
-        }, () => { }, {
-            enableHighAccuracy: true,
-            maximumAge: 0,
-            timeout: 30000
-        });
     }, []);
 
     return <div ref={ref} className={styles.home}>
@@ -159,7 +155,7 @@ export default function Home(props: propsType): ReactNode {
                     <div className={styles.key}>標籤</div>
                     <div className={`${styles.value} ${styles.tags}`}>
                         {
-                            tagsArray.map((data, index) => <label className="ms-p">
+                            tagsArray.map((data, index) => <label className="ms-p" key={index}>
                                 <input
                                     type="checkbox"
                                     checked={tags.includes(index)}
@@ -176,6 +172,7 @@ export default function Home(props: propsType): ReactNode {
                 </div>
             </div>
         </div>
+        <Loading show={foodList === undefined} />
         {
             displayData.map(food => <FoodCard
                 key={food.uid}

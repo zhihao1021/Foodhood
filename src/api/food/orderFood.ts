@@ -2,7 +2,7 @@ import { Order } from "@/schemas/order";
 import axios from "axios";
 
 export default async function orderFood(uid: string): Promise<Order> {
-    if (import.meta.env.DEV) {
+    if (import.meta.env.VITE_DEBUG) {
         await new Promise(resolve => setTimeout(resolve, 1000));
 
         return {

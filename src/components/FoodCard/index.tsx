@@ -59,10 +59,12 @@ export default function FoodCard(props: propsType): ReactNode {
                         {`${data.validityPeriod}h`}
                     </div>
                 </div>
-                {distance && <div className={styles.distance}>
-                    <div className="ms">straighten</div>
-                    <div>{distance}</div>
-                </div>}
+                <div className={styles.distance}>{
+                    distance && <>
+                        <div className="ms">straighten</div>
+                        <div>{distance}</div>
+                    </>
+                }</div>
             </div>
         </div>
     </Link>

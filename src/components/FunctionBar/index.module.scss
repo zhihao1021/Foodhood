@@ -10,7 +10,7 @@
     justify-content: space-around;
     align-items: center;
     backdrop-filter: blur(4px);
-    z-index: 100;
+    z-index: 10000;
 
     &[data-show=false] {
         bottom: -4rem;
