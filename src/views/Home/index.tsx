@@ -18,6 +18,9 @@ export default function Home(props: propsType): ReactNode {
     const [latitude, setLatitude] = useState<number>(0);
     const [longitude, setLongitude] = useState<number>(0);
 
+    const [search, setSearch] = useState<string>("");
+    const [range, setRange] = useState<number>(0);
+
     const [scrollHandler, setScrollHandler] = useState<() => void>();
 
     useEffect(() => {
@@ -58,6 +61,14 @@ export default function Home(props: propsType): ReactNode {
     }, [data]);
 
     return <div ref={ref} className={styles.home}>
+        <div className={styles.searchBox}>
+            <input
+                type="text"
+                placeholder="搜尋食物"
+                value={search}
+                onChange={event => setSearch(event.target.value)}
+            />
+        </div>
         {
             data.map(food => <FoodCard
                 key={food.id}

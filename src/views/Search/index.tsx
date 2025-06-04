@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Food from "@/schemas/food";
-import getData from "@/api/getData";
+// import getData from "@/api/getData";
 import styles from "./index.module.scss";
 
 export default function SearchPage() {
@@ -10,11 +10,11 @@ export default function SearchPage() {
 
   const handleSearch = async () => {
     setLoading(true);
-    const allData = await getData({ limit: 100 });
-    const filtered = allData.filter(item =>
-      item.title.includes(query) || item.description.includes(query)
-    );
-    setResults(filtered);
+    // const allData = await getData({ limit: 100 });
+    // const filtered = allData.filter(item =>
+    //   item.title.includes(query) || item.description.includes(query)
+    // );
+    // setResults(filtered);
     setLoading(false);
   };
 

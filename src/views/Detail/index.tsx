@@ -1,47 +1,70 @@
 import { ReactNode, useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+
 import Food from "@/schemas/food";
-import getData from "@/api/getData";
 
+import getFoodDetail from "@/api/food/getFoodDetail";
 
+import Loading from "@/components/loading";
+
+import styles from "./index.module.scss";
+import tagsArray from "@/const/tags";
 
 export default function Detail(): ReactNode {
     const { id } = useParams();
-    const navigate = useNavigate();
 
-    const [food, setFood] = useState<Food | null>(null);
-    const [loading, setLoading] = useState(true);
+    const [food, setFood] = useState<Food>();
+
+    const router = useNavigate();
 
     useEffect(() => {
-        async function fetchData() {
-        const all = await getData({ limit: 100 });
-        const item = all.find((x) => x.id === id);
-        setFood(item || null);
-        setLoading(false);
-        }
-        fetchData();
+        if (!id) return;
+
+        getFoodDetail(id).then(setFood).catch(() => router(-1));
     }, [id]);
 
-    if (loading) return <p style={{ padding: "1rem" }}>載入中</p>;
-    if (!food) return <p style={{ padding: "1rem" }}>找不到這筆便當資料</p>;
-
-    return (
-        <div style={{ padding: "1rem" }}>
+    return food ? <div className={styles.foodDetail}>
         <h2>{food.title}</h2>
-        <p>{food.description}</p>
-        <p>地點：{food.locationDescription}</p>
-        <p>有效時間：{food.validityPeriod} 小時</p>
-        <p>需要餐具：{food.needTableware ? "是" : "否"}</p>
-        <p>是否素食：{food.includesVegetarian ? "是" : "否"}</p>
-
-        <button>
-            我要預訂
-        </button>
-
-        <br />
-        <button onClick={() => navigate(-1)} style={{ marginTop: "1rem" }}>
-            返回上一頁
-        </button>
+        <div className={styles.field}>
+            <div className={styles.key}>描述</div>
+            <div className={styles.value}>{food.description}</div>
         </div>
-  );
+        <div className={styles.field}>
+            <div className={styles.key}>位置</div>
+            <div className={styles.value}>{food.locationDescription}</div>
+        </div>
+        <div className={styles.field}>
+            <div className={styles.key}>包含素食</div>
+            <div className={styles.value}>{
+                food.includesVegetarian ? "是" : "否"
+            }</div>
+        </div>
+        <div className={styles.field}>
+            <div className={styles.key}>提供餐具</div>
+            <div className={styles.value}>{
+                food.needTableware ? "否" : "是"
+            }</div>
+        </div>
+        <div className={styles.field}>
+            <div className={styles.key}>標籤</div>
+            <div className={styles.tags}>{
+                food.tags.map(tag => <div
+                    key={tag}
+                    className={styles.tag}
+                >{tagsArray[tag].name}</div>)
+            }</div>
+        </div>
+        <div className={styles.mapBox}>
+            <iframe
+                className={styles.map}
+                src={`https://www.google.com/maps/embed/v1/place?key=${import.meta.env.VITE_GOOGLE_MAP_API_KEY}&q=${food.latitude},${food.longitude}`}
+                referrerPolicy="no-referrer-when-downgrade"
+                loading="lazy"
+            />
+        </div>
+    </div> : <Loading show />
+
+    // return food ? <div>
+
+    // </div> : <Loading />
 }

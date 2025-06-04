@@ -1,20 +1,16 @@
 import Food from "@/schemas/food";
 // import axios from "axios";
 
-export default async function getData(options: {
-    skip?: number,
-    limit?: number,
-}): Promise<Array<Food>> {
-    const {
-        skip,
-        limit
-    } = options;
+export default async function getFoodList(): Promise<Array<Food>> {
+    // const response = await axios.get<Array<Food>>("/food");
+
+    // return response.data;
 
     const randomString = `${Date.now()}${Math.random()}`;
     const tags = [0, 1, 2, 3, 4, 5, 6, 7];
     const centerLat = 22.9975432;
     const centetLng = 120.2214239;
-    return Array.from(Array(limit)).map((_, index) => ({
+    return Array.from(Array(10)).map((_, index) => ({
         id: `${randomString}${index}`,
         title: `便當 ${index}`,
         description: `一個便當 ${index}`,
@@ -25,15 +21,7 @@ export default async function getData(options: {
         longitude: centetLng + (Math.random() - 0.5) / 24,
         locationDescription: `資訊系館 ${Math.floor(Math.random() * 20) + 1} 樓`,
         validityPeriod: Math.floor(Math.random() * 24),
-        imageCount: 0
+        imageCount: 0,
+        createdAt: Date.now()
     }));
-
-    // let requestUrl = "/food?"
-    // if (skip) requestUrl += `skip=${skip}&`;
-
-    // if (limit) requestUrl += `limit=${limit}`;
-
-    // const response = await axios.get<Array<Food>>(requestUrl);
-
-    // return response.data;
 }

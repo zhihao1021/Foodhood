@@ -1,17 +1,8 @@
 import { CSSProperties, ReactNode, useCallback, useEffect, useState } from "react";
 
-import styles from "./index.module.scss";
+import tagsArray from "@/const/tags";
 
-const tagsArray = [
-    { name: "飯食" },
-    { name: "麵食" },
-    { name: "湯品" },
-    { name: "點心" },
-    { name: "飲品" },
-    { name: "便當" },
-    { name: "餐盒" },
-    { name: "其他" }
-]
+import styles from "./index.module.scss";
 
 function locationToStr(loc: number, fixed?: boolean): string {
     const hours = parseInt(loc.toString());
@@ -199,7 +190,7 @@ export default function AddNew(): ReactNode {
                     </div>)
                 }
                 <label >
-                    <input type="file" accept="image/*" onChange={event => {
+                    <input type="file" accept="image/*" multiple onChange={event => {
                         setImages(v => [...v, ...Array.from(event.target.files || [])]);
                     }} />
                     <span className="ms">add</span>

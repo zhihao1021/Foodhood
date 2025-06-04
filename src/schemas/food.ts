@@ -9,5 +9,6 @@ export default interface Food {
     longitude: number,
     locationDescription: string,
     validityPeriod: number,
-    imageCount: number
+    imageCount: number,
+    createdAt: number,
 }

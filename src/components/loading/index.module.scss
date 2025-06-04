@@ -1,0 +1,58 @@
+.loading {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: calc(100% - 4rem);
+    width: 100%;
+    overflow: hidden;
+    background-color: #2226;
+    z-index: -1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+
+    .box {
+        position: relative;
+        height: 8rem;
+        width: 8rem;
+
+        .dot {
+            position: absolute;
+            height: 0.5rem;
+            width: 0.5rem;
+            border-radius: 50%;
+            background-color: #FFF;
+
+            top: calc(50% - 0.25rem - 50% * cos(30deg * var(--index)));
+            left: calc(50% - 0.25rem + 50% * sin(30deg * var(--index)));
+
+            animation: loading 1s calc(1s * var(--index) / 12) infinite;
+
+            @keyframes loading {
+                0% {
+                    transform: scale(1);
+                }
+
+                30% {
+                    transform: scale(1.5);
+                }
+
+                80% {
+                    transform: scale(1);
+                }
+
+                100% {
+                    transform: scale(1);
+                }
+            }
+        }
+    }
+
+    &[data-show=true] {
+        opacity: 1;
+        pointer-events: initial;
+    }
+}
