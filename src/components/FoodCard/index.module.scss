@@ -1,6 +1,6 @@
 .foodCard {
     position: relative;
-    width: 100%;
+    width: $max-content;
     height: 12rem;
     border-radius: 0.75rem;
     overflow: hidden;
@@ -8,6 +8,7 @@
     display: flex;
     flex-direction: column;
     align-items: stretch;
+    margin: auto;
 
     .imageBox {
         flex: 1;
@@ -63,11 +64,14 @@
             align-items: flex-end;
             justify-content: space-between;
 
+            >* {
+                flex: 1;
+            }
+
             .properties {
                 display: flex;
                 align-items: center;
                 gap: 0.25rem;
-                font-size: 1.25rem;
 
                 .eco {
                     color: #1FB11F;

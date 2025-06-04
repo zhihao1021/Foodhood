@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useState } from "react";
+import { ReactNode } from "react";
 import { Link } from "react-router-dom";
 
 import logo from "@/assets/icon.svg"
@@ -9,33 +9,33 @@ type propsType = Readonly<{
     avatar?: string
 }>;
 
-let lastScrollTop = 0;
+// let lastScrollTop = 0;
 
 export default function TopBar(props: propsType): ReactNode {
     const {
         avatar
     } = props;
 
-    const [show, setShow] = useState(true);
-    const [eventHandler, setEventHandler] = useState<() => void>();
+    // const [show, setShow] = useState(true);
+    // const [eventHandler, setEventHandler] = useState<() => void>();
 
-    useEffect(() => {
-        const func = () => {
-            setShow(window.scrollY <= lastScrollTop);
-            lastScrollTop = window.scrollY;
-        }
-        setEventHandler(func);
+    // useEffect(() => {
+    //     const func = () => {
+    //         setShow(window.scrollY <= lastScrollTop);
+    //         lastScrollTop = window.scrollY;
+    //     }
+    //     setEventHandler(func);
 
-        window.addEventListener("scroll", func)
-    }, []);
+    //     window.addEventListener("scroll", func)
+    // }, []);
 
-    useEffect(() => () => {
-        if (eventHandler) {
-            window.removeEventListener("scroll", eventHandler);
-        }
-    }, [eventHandler]);
+    // useEffect(() => () => {
+    //     if (eventHandler) {
+    //         window.removeEventListener("scroll", eventHandler);
+    //     }
+    // }, [eventHandler]);
 
-    return <div className={styles.topBar} data-show={show}>
+    return <div className={styles.topBar}> { /* data-show={show}> */}
         <Link to="/" className={styles.logo}>
             <img src={logo} />
         </Link>

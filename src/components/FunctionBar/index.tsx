@@ -1,7 +1,7 @@
 import { ReactNode, useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 
 import styles from "./index.module.scss";
-import { Link, useLocation } from "react-router-dom";
 
 const navigate = [
     {
@@ -9,11 +9,11 @@ const navigate = [
         icon: "home",
         title: "首頁"
     },
-    {
-        path: "/search",
-        icon: "search",
-        title: "搜尋"
-    },
+    // {
+    //     path: "/search",
+    //     icon: "search",
+    //     title: "搜尋"
+    // },
     {
         path: "/add",
         icon: "library_add",

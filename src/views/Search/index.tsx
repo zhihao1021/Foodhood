@@ -1,11 +1,11 @@
 import { useState } from "react";
-import Food from "@/schemas/food";
+import { Food } from "@/schemas/food";
 // import getData from "@/api/getData";
 import styles from "./index.module.scss";
 
 export default function SearchPage() {
   const [query, setQuery] = useState("");
-  const [results, setResults] = useState<Food[]>([]);
+  const [results,] = useState<Food[]>([]);
   const [loading, setLoading] = useState(false);
 
   const handleSearch = async () => {
@@ -35,7 +35,7 @@ export default function SearchPage() {
 
       <ul>
         {results.map((item) => (
-          <li key={item.id}>
+          <li key={item.uid}>
             {item.title} - {item.locationDescription}
           </li>
         ))}

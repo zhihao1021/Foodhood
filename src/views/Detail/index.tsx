@@ -1,11 +1,11 @@
 import { ReactNode, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
-import Food from "@/schemas/food";
+import { Food } from "@/schemas/food";
 
 import getFoodDetail from "@/api/food/getFoodDetail";
 
-import Loading from "@/components/loading";
+import Loading from "@/components/Loading";
 
 import styles from "./index.module.scss";
 import tagsArray from "@/const/tags";

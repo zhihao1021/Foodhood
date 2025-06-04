@@ -1,7 +1,7 @@
 import { ReactNode, useMemo } from "react";
 
 import styles from "./index.module.scss";
-import Food from "@/schemas/food";
+import { Food } from "@/schemas/food";
 import getDistance from "@/utils/getDistance";
 import { Link } from "react-router-dom";
 
@@ -35,7 +35,7 @@ export default function FoodCard(props: propsType): ReactNode {
         return `${import.meta.env.VITE_API_END_POINT}/food/${data}/0`;
     }, [data]);
 
-    return <Link to={`/detail/${data.id}`} className={styles.foodCard}>
+    return <Link to={`/detail/${data.uid}`} className={styles.foodCard}>
         <div className={styles.imageBox}>
             {data.imageCount > 0 && <image href={imageUrl} />}
         </div>
@@ -51,7 +51,7 @@ export default function FoodCard(props: propsType): ReactNode {
             <div className={styles.otherInfo}>
                 <div className={styles.properties}>
                     {data.includesVegetarian && <span className={`ms ${styles.eco}`}>eco</span>}
-                    {data.needTableware && <span className={`ms ${styles.tableware}`}>restaurant</span>}
+                    {!data.needTableware && <span className={`ms ${styles.tableware}`}>restaurant</span>}
                 </div>
                 <div className={styles.time}>
                     <div className="ms">schedule</div>

@@ -1,5 +1,5 @@
 import { ReactNode, useEffect, useState } from "react";
-import Food from "@/schemas/food";
+import { Food } from "@/schemas/food";
 import styles from "./index.module.scss";
 
 export default function Order(): ReactNode {
@@ -8,7 +8,7 @@ export default function Order(): ReactNode {
   useEffect(() => {
     const mock: Food[] = [
       {
-        id: "1",
+        uid: "1",
         title: "雞排便當",
         description: "免費",
         includesVegetarian: false,
@@ -19,6 +19,8 @@ export default function Order(): ReactNode {
         locationDescription: "資訊系館 3 樓",
         validityPeriod: 2,
         imageCount: 0,
+        createdAt: Date.now(),
+        authorId: "author1",
       },
     ];
     setOrders(mock);
@@ -31,7 +33,7 @@ export default function Order(): ReactNode {
         <div className={styles.emptyBox}>尚未預訂任何便當</div>
       ) : (
         orders.map((item) => (
-          <div key={item.id} className={styles.orderCard}>
+          <div key={item.uid} className={styles.orderCard}>
             <div className={styles.infoBox}>
               <h5>{item.title}</h5>
               <div className={styles.note}>{item.description}</div>
